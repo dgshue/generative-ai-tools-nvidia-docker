@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 as python3.10-base
+FROM nvidia/cuda:12.9.0-cudnn-runtime-ubuntu24.04 as python3.10-base
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -6,13 +6,11 @@ RUN uname -a
 
 RUN apt update
 RUN apt install -y git curl wget
-RUN apt install -y python3.10-dev python3.10-tk python3-html5lib python3-apt python3-pip python3.10-distutils python3.10-venv
+RUN apt install -y python3-dev python3-tk python3-html5lib python3-apt python3-pip python3-venv python3-setuptools
 RUN apt install -y python-is-python3
 RUN apt install -y pip
 
 FROM python3.10-base as automatic1111vo
-
-ARG AUTOMATIC1111_VERSION=v1.6.1
 
 #Install TMalloc
 RUN apt install -y libgoogle-perftools-dev
@@ -31,7 +29,7 @@ ENV HOME /home/appuser
 ENV PATH="/home/appuser/.local/bin:$PATH"
 
 #Install automatic1111
-RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui --branch ${AUTOMATIC1111_VERSION} --single-branch
+RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
 
 VOLUME /home/appuser/stable-diffusion-webui
 WORKDIR /home/appuser/stable-diffusion-webui
@@ -85,7 +83,7 @@ RUN git clone https://github.com/hnmr293/posex
 RUN git clone https://github.com/AlUlkesh/stable-diffusion-webui-images-browser
 
 # Reactor (Face Swap)
-RUN git clone https://github.com/Gourieff/sd-webui-reactor.git
+RUN git clone https://github.com/Gourieff/sd-webui-reactor-sfw.git
 
 # Roop (Face Swap)
 RUN git clone https://github.com/s0md3v/sd-webui-roop.git
