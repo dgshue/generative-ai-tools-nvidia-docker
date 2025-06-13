@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.9.0-cudnn-runtime-ubuntu24.04 as python3.10-base
+FROM nvidia/cuda:12.8.0-cudnn-runtime-ubuntu24.04 as python3.12-base
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -91,84 +91,6 @@ RUN git clone https://github.com/s0md3v/sd-webui-roop.git
 # SD WebUI Aspect Ratio Helper
 RUN git clone https://github.com/thomasasfk/sd-webui-aspect-ratio-helper.git
 
-#Control Net models
-WORKDIR /home/appuser/stable-diffusion-webui/extensions/sd-webui-controlnet/models
-
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/diffusers_xl_canny_full.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/diffusers_xl_canny_mid.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/diffusers_xl_canny_small.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/diffusers_xl_depth_full.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/diffusers_xl_depth_mid.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/diffusers_xl_depth_small.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/ioclab_sd15_recolor.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/ip-adapter_sd15.pth'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/ip-adapter_sd15_plus.pth'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/ip-adapter_xl.pth'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_depth_anime.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_canny_anime.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_scribble_anime.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_openpose_anime.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_openpose_anime_v2.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_blur_anime_beta.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_blur_anime.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_blur.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_canny.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_depth.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_canny_128lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_canny_256lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_depth_128lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_depth_256lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_recolor_128lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_recolor_256lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_sketch_128lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_sketch_256lora.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sargezt_xl_depth.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sargezt_xl_depth_faid_vidit.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sargezt_xl_depth_zeed.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sargezt_xl_softedge.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_xl_canny.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_xl_openpose.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_xl_sketch.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_diffusers_xl_canny.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_diffusers_xl_depth_midas.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_diffusers_xl_depth_zoe.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_diffusers_xl_lineart.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_diffusers_xl_openpose.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/t2i-adapter_diffusers_xl_sketch.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/thibaud_xl_openpose.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/thibaud_xl_openpose_256lora.safetensors'
-
-RUN ls -lha
-
-#Animatediff models
-WORKDIR /home/appuser/stable-diffusion-webui/extensions/sd-webui-animatediff/model
-
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v14.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v15.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v15_v2.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/mm_sdxl_v10_beta.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_PanLeft.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_PanRight.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_RollingAnticlockwise.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_RollingClockwise.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_TiltDown.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_TiltUp.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_ZoomIn.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_ZoomOut.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/refs%2Fpr%2F3/mm_sd_v14.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/refs%2Fpr%2F3/mm_sd_v14.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/refs%2Fpr%2F3/mm_sd_v15.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/refs%2Fpr%2F3/mm_sd_v15.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/refs%2Fpr%2F3/mm_sd_v15_v2.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/guoyww/animatediff/resolve/refs%2Fpr%2F3/mm_sd_v15_v2.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/manshoety/AD_Stabilized_Motion/resolve/main/mm-Stabilized_high.pth'
-RUN wget --content-disposition 'https://huggingface.co/manshoety/AD_Stabilized_Motion/resolve/main/mm-Stabilized_mid.pth'
-RUN wget --content-disposition 'https://huggingface.co/CiaraRowles/TemporalDiff/resolve/main/temporaldiff-v1-animatediff.ckpt'
-RUN wget --content-disposition 'https://huggingface.co/CiaraRowles/TemporalDiff/resolve/main/temporaldiff-v1-animatediff.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/hotshotco/Hotshot-XL/resolve/main/hsxl_temporal_layers.f16.safetensors'
-RUN wget --content-disposition 'https://huggingface.co/hotshotco/Hotshot-XL/resolve/main/hsxl_temporal_layers.safetensors'
-
-RUN ls -lha
 
 WORKDIR /home/appuser/stable-diffusion-webui
 
@@ -181,12 +103,11 @@ ENV USE_CUDA_118 true
 
 RUN cat webui-user.sh
 
-RUN python3 -m venv venv
-ENV PATH="./venv/bin:$PATH"
+#RUN python3 -m venv venv
+#ENV PATH="./venv/bin:$PATH"
 
 RUN pip install --upgrade pip
-
-#RUN pip install -U xformers --index-url https://download.pytorch.org/whl/cu118
+RUN pip install -U xformers torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
 EXPOSE 7860
 ENTRYPOINT [ "./webui.sh" ]
